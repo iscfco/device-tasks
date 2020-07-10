@@ -1,9 +1,8 @@
 package main
 
 import (
+	"device-tasks/modules/configurator"
 	"device-tasks/modules/scenariosdecoder"
-	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 )
@@ -20,12 +19,12 @@ func main() {
 	if err != nil {
 		log.Fatal("Error at moment of decode scenarios", err)
 	}
-	jsonS, _ := json.Marshal(scenarios)
-	fmt.Println(string(jsonS))
 
 	// Getting optimal configuration:
+	optimalConfigs := configurator.GetOptimalConfig(scenarios)
 
 	// Writing result:
+	WriteResult(optimalConfigs)
 }
 
 // ReadScenarios will read the possible scenarios from a file, we assume the file is

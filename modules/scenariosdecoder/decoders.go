@@ -1,12 +1,13 @@
 package scenariosdecoder
 
 import (
+	"device-tasks/model"
 	"strconv"
 	"strings"
 )
 
 // scenarioItemDecoders will map each scenarioItem type to a handler
-var scenarioItemDecoders = map[scenarioItem]func(string, *DeviceScenario) error{
+var scenarioItemDecoders = map[scenarioItem]func(string, *model.DeviceScenario) error{
 	SCENARIO_ITEM_RESOURCE_CAPACITY: DecodeResourceCapacity,
 	SCENARIO_ITEM_BACKGROUND_TASKS:  DecodeBackgroundTasks,
 	SCENARIO_ITEM_FOREGROUND_TASK:   DecodeForegroundTasks,
@@ -14,7 +15,7 @@ var scenarioItemDecoders = map[scenarioItem]func(string, *DeviceScenario) error{
 
 // DecodeResourceCapacity will decode the type SCENARIO_ITEM_RESOURCE_CAPACITY
 // it waits for a string with the format: 10
-func DecodeResourceCapacity(item string, deviceScenario *DeviceScenario) error {
+func DecodeResourceCapacity(item string, deviceScenario *model.DeviceScenario) error {
 	itemAsInt, err := strconv.Atoi(item)
 	if err != nil {
 		return err
@@ -25,7 +26,7 @@ func DecodeResourceCapacity(item string, deviceScenario *DeviceScenario) error {
 
 // DecodeBackgroundTasks will decode for SCENARIO_ITEM_BACKGROUND_TASKS
 // Waits for a string with the format: (1,2),(2,2),(3,5)
-func DecodeBackgroundTasks(item string, deviceScenario *DeviceScenario) error {
+func DecodeBackgroundTasks(item string, deviceScenario *model.DeviceScenario) error {
 	pairs := strings.Split(item, "),(")
 	for _, pair := range pairs {
 		pair = strings.Trim(pair, "(")
@@ -43,7 +44,7 @@ func DecodeBackgroundTasks(item string, deviceScenario *DeviceScenario) error {
 		if err != nil {
 			return err
 		}
-		deviceScenario.BackgroundTasks = append(deviceScenario.BackgroundTasks, BackgroundTask{
+		deviceScenario.BackgroundTasks = append(deviceScenario.BackgroundTasks, model.BackgroundTask{
 			ID:                  ID,
 			ResourceConsumption: resourceConsumption,
 		})
@@ -53,7 +54,7 @@ func DecodeBackgroundTasks(item string, deviceScenario *DeviceScenario) error {
 
 // DecodeForegroundTasks will decode for SCENARIO_ITEM_FOREGROUND_TASK
 // Waits for a string with the format: (1,2),(2,2),(3,5)
-func DecodeForegroundTasks(item string, deviceScenario *DeviceScenario) error {
+func DecodeForegroundTasks(item string, deviceScenario *model.DeviceScenario) error {
 	pairs := strings.Split(item, "),(")
 	for _, pair := range pairs {
 		pair = strings.Trim(pair, "(")
@@ -71,7 +72,7 @@ func DecodeForegroundTasks(item string, deviceScenario *DeviceScenario) error {
 		if err != nil {
 			return err
 		}
-		deviceScenario.ForegroundTask = append(deviceScenario.ForegroundTask, ForegroundTask{
+		deviceScenario.ForegroundTasks = append(deviceScenario.ForegroundTasks, model.ForegroundTask{
 			ID:                  ID,
 			ResourceConsumption: resourceConsumption,
 		})
