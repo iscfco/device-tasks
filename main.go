@@ -1,7 +1,7 @@
 package main
 
 import (
-	"device-tasks/lib/scenariosdecoder"
+	"device-tasks/modules/scenariosdecoder"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -14,10 +14,8 @@ func main() {
 	if err != nil {
 		log.Fatal("Error at moment of read file", err)
 	}
-	// fmt.Println(*scenarios)
 
-	// Scenarios Parser:
-	// - Will read data and determine "Resource Capacity", "Background Tasks" and "Foreground Tasks"
+	// Scenarios decoding:
 	scenarios, err := scenariosdecoder.DecodeScenarios(*scenariosStr)
 	if err != nil {
 		log.Fatal("Error at moment of decode scenarios", err)

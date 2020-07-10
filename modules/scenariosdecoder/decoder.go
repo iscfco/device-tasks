@@ -1,7 +1,6 @@
 package scenariosdecoder
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -36,7 +35,6 @@ func DecodeScenarios(scenariosStr string) ([]DeviceScenario, error) {
 	var scenarios []DeviceScenario
 	currentScenarioIndex := -1
 	for _, line := range scenariosSliced {
-		fmt.Println("reading: ...", line)
 		if line == "" {
 			continue // It just ignores the line, it doesn't contain anything
 		}
