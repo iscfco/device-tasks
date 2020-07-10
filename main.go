@@ -1,8 +1,10 @@
 package main
 
 import (
+	"device-tasks/model"
 	"device-tasks/modules/configurator"
 	"device-tasks/modules/scenariosdecoder"
+	"fmt"
 	"io/ioutil"
 	"log"
 )
@@ -27,7 +29,7 @@ func main() {
 	WriteResult(optimalConfigs)
 }
 
-// ReadScenarios will read the possible scenarios from a file, we assume the file is
+// ReadScenariosFromFile will read the possible scenarios from a file, we assume the file is
 // located in the same level of this file
 func ReadScenariosFromFile() (*string, error) {
 	file, err := ioutil.ReadFile("challenge.in")
@@ -36,4 +38,16 @@ func ReadScenariosFromFile() (*string, error) {
 	}
 	data := string(file)
 	return &data, nil
+}
+
+// WriteResult will write the result in the output file
+func WriteResult(configs []model.DeviceConfigList) error {
+	var result string
+	for index, config := range configs {
+		result += fmt.Sprint(config)
+		if index+1 < len(configs) {
+			result += fmt.Sprint("\n\n")
+		}
+	}
+	return ioutil.WriteFile("challenge.out", []byte(result), 0777)
 }
